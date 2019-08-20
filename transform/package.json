@@ -5,6 +5,8 @@
   "main": "lib/index.js",
   "scripts": {
     "build": "tsc -p .",
+    "clean": "rm -Rf ./lib",
+    "prepublishOnly": "npm run clean && npm run test && npm run build",
     "test": "jest"
   },
   "repository": {
