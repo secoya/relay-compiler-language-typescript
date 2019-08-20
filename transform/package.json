@@ -1,5 +1,5 @@
 {
-	"name": "typescript-transform-relay",
+	"name": "@secoya/typescript-transform-relay",
 	"version": "1.0.0",
 	"description": "A transformer for use with TypeScript when using relay (modern/compat/classic)",
 	"main": "lib/index.js",
@@ -8,7 +8,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/kastermester/relay-compiler-language-typescript.git"
+		"url": "git+https://github.com/secoya/relay-compiler-language-typescript.git"
 	},
 	"keywords": [
 		"relay",
@@ -17,9 +17,9 @@
 	"author": "Kaare Hoff Skovgaard <kaare@kaareskovgaard.net>",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/kastermester/relay-compiler-language-typescript/issues"
+		"url": "https://github.com/secoya/relay-compiler-language-typescript/issues"
 	},
-	"homepage": "https://github.com/kastermester/relay-compiler-language-typescript#readme",
+	"homepage": "https://github.com/secoya/relay-compiler-language-typescript#readme",
 	"dependencies": {
 		"graphql": "^14.0.2"
 	},
