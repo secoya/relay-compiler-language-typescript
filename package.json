@@ -1,6 +1,6 @@
 {
   "name": "@secoya/relay-compiler-language-typescript",
-  "version": "4.1.0-secoya.a",
+  "version": "4.6.0-secoya.a",
   "description": "A language plugin for Relay that adds TypeScript support, including emitting type definitions.",
   "keywords": [
     "graphql",
