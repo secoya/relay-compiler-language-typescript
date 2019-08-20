@@ -1,6 +1,6 @@
 {
-  "name": "relay-compiler-language-typescript",
-  "version": "4.1.0",
+  "name": "@secoya/relay-compiler-language-typescript",
+  "version": "4.1.0-secoya.a",
   "description": "A language plugin for Relay that adds TypeScript support, including emitting type definitions.",
   "keywords": [
     "graphql",
@@ -8,13 +8,13 @@
     "relay",
     "typescript"
   ],
-  "homepage": "https://github.com/relay-tools/relay-compiler-language-typescript",
+  "homepage": "https://github.com/secoya/relay-compiler-language-typescript",
   "bugs": {
-    "url": "https://github.com/relay-tools/relay-compiler-language-typescript/issues"
+    "url": "https://github.com/secoya/relay-compiler-language-typescript/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/relay-tools/relay-compiler-language-typescript.git"
+    "url": "https://github.com/secoya/relay-compiler-language-typescript.git"
   },
   "license": "MIT",
   "contributors": [
