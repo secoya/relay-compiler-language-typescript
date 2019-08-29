@@ -1,6 +1,6 @@
 {
   "name": "@secoya/typescript-transform-relay",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A transformer for use with TypeScript when using relay (modern/compat/classic)",
   "main": "lib/index.js",
   "scripts": {
