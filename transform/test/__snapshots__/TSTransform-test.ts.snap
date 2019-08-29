@@ -4350,6 +4350,7 @@ module.exports = createRefetchContainer(RefetchExample, {
         return {
             kind: "OperationDefinition",
             argumentDefinitions: [],
+            params: {},
             name: "RefetchExampleRefetchQuery",
             operation: "query",
             node: function () {
@@ -4506,6 +4507,7 @@ module.exports = createRefetchContainer(RefetchExample, {
         return {
             kind: "OperationDefinition",
             argumentDefinitions: [],
+            params: {},
             name: "RefetchExampleRefetchQuery",
             operation: "query",
             node: function () {
@@ -6551,6 +6553,7 @@ function SomeTopLevelView() {
                         kind: "LocalArgument",
                         name: "id"
                     }],
+                params: {},
                 name: "ExampleQuery",
                 operation: "query",
                 node: function () {
@@ -6672,6 +6675,7 @@ function SomeTopLevelView() {
                         kind: "LocalArgument",
                         name: "id"
                     }],
+                params: {},
                 name: "ExampleQuery",
                 operation: "query",
                 node: function () {
@@ -7552,6 +7556,7 @@ const CompatCommentCreateMutation = {
                     kind: "LocalArgument",
                     name: "input"
                 }],
+            params: {},
             name: "CompatCommentCreateMutation",
             operation: "mutation",
             node: function () {
@@ -7681,6 +7686,7 @@ const CompatCommentCreateMutation = {
                     kind: "LocalArgument",
                     name: "input"
                 }],
+            params: {},
             name: "CompatCommentCreateMutation",
             operation: "mutation",
             node: function () {
@@ -7863,6 +7869,7 @@ const CompatViewerQuery = {
                     kind: "LocalArgument",
                     name: "scale"
                 }],
+            params: {},
             name: "CompatViewerQuery",
             operation: "query",
             node: function () {
@@ -8040,6 +8047,7 @@ const CompatViewerQuery = {
                     kind: "LocalArgument",
                     name: "scale"
                 }],
+            params: {},
             name: "CompatViewerQuery",
             operation: "query",
             node: function () {
@@ -8250,6 +8258,7 @@ const CompatCommentCreateMutation = {
                     kind: "LocalArgument",
                     name: "input"
                 }],
+            params: {},
             name: "CompatCommentCreateMutation",
             operation: "mutation",
             node: function () {
@@ -8379,6 +8388,7 @@ const CompatCommentCreateMutation = {
                     kind: "LocalArgument",
                     name: "input"
                 }],
+            params: {},
             name: "CompatCommentCreateMutation",
             operation: "mutation",
             node: function () {
@@ -9568,6 +9578,7 @@ const CompatViewerQuery = {
                     kind: "LocalArgument",
                     name: "scale"
                 }],
+            params: {},
             name: "CompatViewerQuery",
             operation: "query",
             node: function () {
@@ -9697,6 +9708,7 @@ const CompatViewerQuery = {
                     kind: "LocalArgument",
                     name: "scale"
                 }],
+            params: {},
             name: "CompatViewerQuery",
             operation: "query",
             node: function () {
@@ -12772,6 +12784,7 @@ class CompatProfile extends React.Component {
                             kind: "LocalArgument",
                             name: "input"
                         }],
+                    params: {},
                     name: "ActorSubscribe",
                     operation: "mutation",
                     node: function () {
@@ -12985,6 +12998,7 @@ class CompatProfile extends React.Component {
                             kind: "LocalArgument",
                             name: "input"
                         }],
+                    params: {},
                     name: "ActorSubscribe",
                     operation: "mutation",
                     node: function () {
