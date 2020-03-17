@@ -38,14 +38,14 @@ type PrinterOptions = {
 export function RelayQLPrinter(options: PrinterOptions) {
   const formatFields = options.snakeCase
     ? function <T extends { [key: string]: string }>(fields: T): T {
-      const formatted = {} as T;
-      (Object.keys(fields) as (keyof T)[]).forEach(name => {
+      const formatted = {} as { [key: string]: string };
+      Object.keys(fields).forEach(name => {
         formatted[name] = (name as string).replace(
           /[A-Z]/g,
           letter => '_' + letter.toLowerCase(),
         );
       });
-      return formatted;
+      return formatted as T;
     }
     : function <T>(fields: T): T {
       return fields;

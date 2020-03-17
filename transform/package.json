@@ -1,6 +1,6 @@
 {
   "name": "@secoya/typescript-transform-relay",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "A transformer for use with TypeScript when using relay (modern/compat/classic)",
   "main": "lib/index.js",
   "scripts": {
@@ -29,11 +29,11 @@
   "devDependencies": {
     "@types/graphql": "^14.0.0",
     "@types/jest": "^22.0.1",
-    "@types/node": "^10.10.0",
+    "@types/node": "^12.12.30",
     "jest": "^23.6.0",
     "relay-test-utils": "^1.7.0",
     "ts-jest": "^23.1.4",
-    "typescript": "^2.9.2"
+    "typescript": "^3.8.3"
   },
   "peerDependencies": {
     "typescript": "^2.9.2 || >3.0.0"

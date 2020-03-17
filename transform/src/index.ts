@@ -8,7 +8,7 @@ import { ScopeAnalyzer } from "./ScopeAnalyzer";
 
 // https://github.com/Microsoft/TypeScript/blob/cc6d18e4db924d05e55c2a22587ad47ba53e7989/src/compiler/types.ts#L4490
 const enum TransformFlags {
-  ContainsES2015 = 1 << 7
+  ContainsES2015 = 1 << 8
 }
 
 interface ExtraNode {

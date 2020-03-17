@@ -90,12 +90,12 @@ function createAST(
       modernNode,
       createClassicNode(ctx, scopeAnalyzer, node, graphqlDefinition, opts),
     );
-    if (setSourceMapRange) {
+    if (typeof setSourceMapRange === 'function') {
       ts.setSourceMapRange(result, ts.getSourceMapRange(node));
     }
     return result;
   }
-  if (setSourceMapRange) {
+  if (typeof setSourceMapRange === 'function') {
     ts.setSourceMapRange(modernNode, ts.getSourceMapRange(node));
   }
   return modernNode;
