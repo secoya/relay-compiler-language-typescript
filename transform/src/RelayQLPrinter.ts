@@ -1,10 +1,6 @@
 import * as ts from "typescript";
-
-import { RelayTransformError } from "./RelayTransformError";
-
-import { find } from "./find";
 import * as util from "util";
-
+import { find } from "./find";
 import {
   RelayQLField,
   RelayQLFragment,
@@ -14,8 +10,6 @@ import {
   RelayQLQuery,
   RelayQLSubscription,
 } from "./RelayQLAST";
-import { ID } from "./RelayQLNodeInterface";
-
 import {
   RelayQLArgument,
   RelayQLArgumentType,
@@ -23,6 +17,26 @@ import {
   RelayQLDirective,
   RelayQLType,
 } from "./RelayQLAST";
+import { ID } from "./RelayQLNodeInterface";
+import { RelayTransformError } from "./RelayTransformError";
+
+function createLiteral(value: unknown) {
+  const literal =
+    typeof value === 'string'
+      ? ts.factory.createStringLiteral(value)
+      : typeof value === 'number'
+      ? ts.factory.createNumericLiteral(value)
+      : typeof value === 'boolean'
+      ? value ? ts.factory.createTrue() : ts.factory.createFalse()
+      : value === null
+      ? ts.factory.createNull()
+      : null;
+
+  if (literal === null) {
+    throw new TypeError(`Invalid literal value: ${value}`);
+  }
+  return literal;
+}
 
 export type Printable = ts.Expression;
 export type Substitution = {
@@ -51,7 +65,7 @@ export function RelayQLPrinter(options: PrinterOptions) {
       return fields;
     };
 
-  const EMPTY_ARRAY = ts.createArrayLiteral([], /* multiLine */ false);
+  const EMPTY_ARRAY = ts.factory.createArrayLiteralExpression([], /* multiLine */ false);
   const FIELDS = formatFields({
     __typename: '__typename',
     clientMutationId: 'clientMutationId',
@@ -64,7 +78,7 @@ export function RelayQLPrinter(options: PrinterOptions) {
     pageInfo: 'pageInfo',
   });
   const INPUT_ARGUMENT_NAME = options.inputArgumentName || 'input';
-  const NULL = ts.createNull();
+  const NULL = ts.factory.createNull();
 
   class RelayQLPrinter {
     tagName: string;
@@ -80,7 +94,7 @@ export function RelayQLPrinter(options: PrinterOptions) {
 
     print(
       definition: RelayQLDefinition<any>,
-      substitutions: Array<Substitution>,
+      substitutions: Substitution[],
       enableValidation: boolean = true,
     ): Printable {
       let printedDocument: ts.Expression;
@@ -98,21 +112,21 @@ export function RelayQLPrinter(options: PrinterOptions) {
           definition.getLocation(),
         );
       }
-      return ts.createCall(
-        ts.createFunctionExpression(
+      return ts.factory.createCallExpression(
+        ts.factory.createFunctionExpression(
           undefined,
           undefined,
           undefined,
           undefined,
-          substitutions.map(substitution => ts.createParameter(
+          substitutions.map(substitution => ts.factory.createParameterDeclaration(
             undefined,
             undefined,
             undefined,
-            ts.createIdentifier(substitution.name), undefined, undefined, undefined),
+            ts.factory.createIdentifier(substitution.name)),
           ),
           undefined,
-          ts.createBlock([
-            ts.createReturn(printedDocument),
+          ts.factory.createBlock([
+            ts.factory.createReturnStatement(printedDocument),
           ], /* mutliLine */ true),
         ),
         undefined,
@@ -176,14 +190,14 @@ export function RelayQLPrinter(options: PrinterOptions) {
           .getName({ modifiers: true });
         metadata.identifyingArgName = identifyingArgName;
         metadata.identifyingArgType = identifyingArgType;
-        calls = ts.createArrayLiteral(
+        calls = ts.factory.createArrayLiteralExpression(
           [
             codify({
-              kind: ts.createLiteral('Call'),
+              kind: createLiteral('Call'),
               metadata: objectify({
                 type: identifyingArgType,
               }),
-              name: ts.createLiteral(identifyingArgName),
+              name: createLiteral(identifyingArgName),
               value: this.printArgumentValue(identifyingArg),
             }),
           ],
@@ -195,11 +209,11 @@ export function RelayQLPrinter(options: PrinterOptions) {
         calls,
         children: selections,
         directives: this.printDirectives(rootField.getDirectives()),
-        fieldName: ts.createLiteral(rootField.getName()),
-        kind: ts.createLiteral('Query'),
+        fieldName: createLiteral(rootField.getName()),
+        kind: createLiteral('Query'),
         metadata: objectify(metadata as {}),
-        name: ts.createLiteral(query.getName()),
-        type: ts.createLiteral(rootFieldType.getName({ modifiers: false })),
+        name: createLiteral(query.getName()),
+        type: createLiteral(rootFieldType.getName({ modifiers: false })),
       });
     }
 
@@ -240,10 +254,10 @@ export function RelayQLPrinter(options: PrinterOptions) {
         children: selections,
         directives: this.printDirectives(fragment.getDirectives()),
         id: this.printFragmentID(fragment),
-        kind: ts.createLiteral('Fragment'),
+        kind: createLiteral('Fragment'),
         metadata,
-        name: ts.createLiteral(fragment.getName()),
-        type: ts.createLiteral(fragmentType.getName({ modifiers: false })),
+        name: createLiteral(fragment.getName()),
+        type: createLiteral(fragmentType.getName({ modifiers: false })),
       });
 
       if (selectVariables) {
@@ -255,18 +269,18 @@ export function RelayQLPrinter(options: PrinterOptions) {
             fragment.getLocation(),
           );
         }
-        return ts.createCall(
-          ts.createPropertyAccess(
+        return ts.factory.createCallExpression(
+          ts.factory.createPropertyAccessExpression(
             identify(this.tagName),
-            ts.createIdentifier('__createFragment'),
+            ts.factory.createIdentifier('__createFragment'),
           ),
           undefined,
           [
             fragmentCode,
-            ts.createObjectLiteral(
+            ts.factory.createObjectLiteralExpression(
               selectVariablesValue.map(item => {
                 const value = item.getValue();
-                return ts.createPropertyAssignment(value, this.printVariable(value));
+                return ts.factory.createPropertyAssignment(value, this.printVariable(value));
               }),
               /* multiLine */ true,
             ),
@@ -278,8 +292,8 @@ export function RelayQLPrinter(options: PrinterOptions) {
     }
 
     printFragmentID(fragment: RelayQLFragment): Printable {
-      return ts.createCall(
-        ts.createPropertyAccess(identify(this.tagName), ts.createIdentifier('__id')),
+      return ts.factory.createCallExpression(
+        ts.factory.createPropertyAccessExpression(identify(this.tagName), ts.factory.createIdentifier('__id')),
         undefined,
         [],
       );
@@ -316,20 +330,20 @@ export function RelayQLPrinter(options: PrinterOptions) {
       };
 
       return codify({
-        calls: ts.createArrayLiteral([
+        calls: ts.factory.createArrayLiteralExpression([
           codify({
-            kind: ts.createLiteral('Call'),
+            kind: createLiteral('Call'),
             metadata: objectify({}),
-            name: ts.createLiteral(rootField.getName()),
+            name: createLiteral(rootField.getName()),
             value: this.printVariable('input'),
           }),
         ], /* multiLine */ true),
         children: selections,
         directives: this.printDirectives(mutation.getDirectives()),
-        kind: ts.createLiteral('Mutation'),
+        kind: createLiteral('Mutation'),
         metadata: objectify(metadata),
-        name: ts.createLiteral(mutation.getName()),
-        responseType: ts.createLiteral(rootFieldType.getName({ modifiers: false })),
+        name: createLiteral(mutation.getName()),
+        responseType: createLiteral(rootFieldType.getName({ modifiers: false })),
       });
     }
 
@@ -367,27 +381,27 @@ export function RelayQLPrinter(options: PrinterOptions) {
       };
 
       return codify({
-        calls: ts.createArrayLiteral([
+        calls: ts.factory.createArrayLiteralExpression([
           codify({
-            kind: ts.createLiteral('Call'),
+            kind: createLiteral('Call'),
             metadata: objectify({}),
-            name: ts.createLiteral(rootField.getName()),
+            name: createLiteral(rootField.getName()),
             value: this.printVariable('input'),
           }),
         ], /* multiLine */ true),
         children: selections,
         directives: this.printDirectives(subscription.getDirectives()),
-        kind: ts.createLiteral('Subscription'),
+        kind: createLiteral('Subscription'),
         metadata: objectify(metadata),
-        name: ts.createLiteral(subscription.getName()),
-        responseType: ts.createLiteral(rootFieldType.getName({ modifiers: false })),
+        name: createLiteral(subscription.getName()),
+        responseType: createLiteral(rootFieldType.getName({ modifiers: false })),
       });
     }
 
     printSelections(
       parent: RelayQLField | RelayQLFragment,
       requisiteFields: { [fieldName: string]: boolean },
-      extraFragments?: Array<RelayQLFragment> | null,
+      extraFragments?: RelayQLFragment[] | null,
       isGeneratedQuery = false,
     ): Printable {
       const fields: RelayQLField[] = [];
@@ -430,7 +444,7 @@ export function RelayQLPrinter(options: PrinterOptions) {
       const selections = [...printedFields, ...printedFragments];
 
       if (selections.length) {
-        const arrayExpressionOfSelections = ts.createArrayLiteral(selections, /* multiLine */ true);
+        const arrayExpressionOfSelections = ts.factory.createArrayLiteralExpression(selections, /* multiLine */ true);
         return didPrintFragmentReference
           ? shallowFlatten(arrayExpressionOfSelections)
           : arrayExpressionOfSelections;
@@ -439,11 +453,11 @@ export function RelayQLPrinter(options: PrinterOptions) {
     }
 
     printFields(
-      fields: Array<RelayQLField>,
+      fields: RelayQLField[],
       parent: RelayQLField | RelayQLFragment,
       requisiteFields: { [fieldName: string]: boolean },
       isGeneratedQuery = false,
-    ): Array<Printable> {
+    ): Printable[] {
       const parentType = parent.getType();
       if (
         parentType.isConnection() &&
@@ -567,28 +581,28 @@ export function RelayQLPrinter(options: PrinterOptions) {
       const fieldAlias = field.getAlias();
       const args = field.getArguments();
       const calls = args.length
-        ? ts.createArrayLiteral(args.map(arg => this.printArgument(arg)), /* multiLine */ true)
+        ? ts.factory.createArrayLiteralExpression(args.map(arg => this.printArgument(arg)), /* multiLine */ true)
         : NULL;
 
       return codify({
-        alias: fieldAlias ? ts.createLiteral(fieldAlias) : NULL,
+        alias: fieldAlias ? createLiteral(fieldAlias) : NULL,
         calls,
         children: selections,
         directives: this.printDirectives(field.getDirectives()),
-        fieldName: ts.createLiteral(field.getName()),
-        kind: ts.createLiteral('Field'),
+        fieldName: createLiteral(field.getName()),
+        kind: createLiteral('Field'),
         metadata: this.printRelayDirectiveMetadata(field, metadata),
-        type: ts.createLiteral(fieldType.getName({ modifiers: false })),
+        type: createLiteral(fieldType.getName({ modifiers: false })),
       });
     }
 
     printFragmentReference(
       fragmentReference: RelayQLFragmentSpread,
     ): Printable {
-      return ts.createCall(
-        ts.createPropertyAccess(identify(this.tagName), ts.createIdentifier('__frag')),
+      return ts.factory.createCallExpression(
+        ts.factory.createPropertyAccessExpression(identify(this.tagName), ts.factory.createIdentifier('__frag')),
         undefined,
-        [ts.createIdentifier(fragmentReference.getName())],
+        [ts.factory.createIdentifier(fragmentReference.getName())],
       );
     }
 
@@ -599,9 +613,9 @@ export function RelayQLPrinter(options: PrinterOptions) {
         metadata.type = inputType;
       }
       return codify({
-        kind: ts.createLiteral('Call'),
+        kind: createLiteral('Call'),
         metadata: objectify(metadata),
-        name: ts.createLiteral(arg.getName()),
+        name: createLiteral(arg.getName()),
         value: this.printArgumentValue(arg),
       });
     }
@@ -617,54 +631,54 @@ export function RelayQLPrinter(options: PrinterOptions) {
     printVariable(name: string): Printable {
       // Assume that variables named like substitutions are substitutions.
       if (this.variableNames.hasOwnProperty(name)) {
-        return ts.createCall(
-          ts.createPropertyAccess(identify(this.tagName), ts.createIdentifier('__var')),
+        return ts.factory.createCallExpression(
+          ts.factory.createPropertyAccessExpression(identify(this.tagName), ts.factory.createIdentifier('__var')),
           undefined,
-          [ts.createIdentifier(name)],
+          [ts.factory.createIdentifier(name)],
         );
       }
       return codify({
-        kind: ts.createLiteral('CallVariable'),
-        callVariableName: ts.createLiteral(name),
+        kind: createLiteral('CallVariable'),
+        callVariableName: createLiteral(name),
       });
     }
 
     printValue(value: any): Printable {
       if (Array.isArray(value)) {
-        return ts.createArrayLiteral(
+        return ts.factory.createArrayLiteralExpression(
           // $FlowFixMe
           value.map(element => this.printArgumentValue(element)),
           /* multiLine */ true
         );
       }
       return codify({
-        kind: ts.createLiteral('CallValue'),
+        kind: createLiteral('CallValue'),
         // codify() skips properties where value === NULL, but `callValue` is a
         // required property. Create fresh null literals to force the property
         // to be printed.
-        callValue: value == null ? ts.createNull() : printLiteralValue(value),
+        callValue: value == null ? ts.factory.createNull() : printLiteralValue(value),
       });
     }
 
-    printDirectives(directives: Array<RelayQLDirective>): Printable {
+    printDirectives(directives: RelayQLDirective[]): Printable {
       const printedDirectives: Printable[] = [];
       directives.forEach(directive => {
         if (directive.getName() === 'relay') {
           return;
         }
         printedDirectives.push(
-          ts.createObjectLiteral([
-            ts.createPropertyAssignment('kind', ts.createLiteral('Directive')),
-            ts.createPropertyAssignment('name', ts.createLiteral(directive.getName())),
-            ts.createPropertyAssignment(
+          ts.factory.createObjectLiteralExpression([
+            ts.factory.createPropertyAssignment('kind', createLiteral('Directive')),
+            ts.factory.createPropertyAssignment('name', createLiteral(directive.getName())),
+            ts.factory.createPropertyAssignment(
               'args',
-              ts.createArrayLiteral(
+              ts.factory.createArrayLiteralExpression(
                 directive
                   .getArguments()
                   .map(arg =>
-                    ts.createObjectLiteral([
-                      ts.createPropertyAssignment('name', ts.createLiteral(arg.getName())),
-                      ts.createPropertyAssignment('value', this.printArgumentValue(arg)),
+                    ts.factory.createObjectLiteralExpression([
+                      ts.factory.createPropertyAssignment('name', createLiteral(arg.getName())),
+                      ts.factory.createPropertyAssignment('value', this.printArgumentValue(arg)),
                     ], true),
                 ),
                 /* multiLine */ true
@@ -674,7 +688,7 @@ export function RelayQLPrinter(options: PrinterOptions) {
         );
       });
       if (printedDirectives.length) {
-        return ts.createArrayLiteral(printedDirectives, /* multiLine */ true);
+        return ts.factory.createArrayLiteralExpression(printedDirectives, /* multiLine */ true);
       }
       return NULL;
     }
@@ -700,7 +714,7 @@ export function RelayQLPrinter(options: PrinterOptions) {
           }
           if (arg.getName() !== 'variables') {
             properties.push(
-              ts.createPropertyAssignment(arg.getName(), ts.createLiteral(arg.getValue())),
+              ts.factory.createPropertyAssignment(arg.getName(), createLiteral(arg.getValue())),
             );
           }
         });
@@ -708,12 +722,10 @@ export function RelayQLPrinter(options: PrinterOptions) {
       if (maybeMetadata) {
         const metadata = maybeMetadata;
         Object.keys(metadata).forEach(key => {
-          if (metadata[key]) {
-            properties.push(ts.createPropertyAssignment(key, ts.createLiteral(metadata[key])));
-          }
+          properties.push(ts.factory.createPropertyAssignment(key, createLiteral(metadata[key])));
         });
       }
-      return ts.createObjectLiteral(properties, /* multiLine */ true);
+      return ts.factory.createObjectLiteralExpression(properties, /* multiLine */ true);
     }
 
     /**
@@ -761,8 +773,8 @@ export function RelayQLPrinter(options: PrinterOptions) {
 
   function validateField(field: RelayQLField, parentType: RelayQLType): void {
     if (field.getName() === 'node') {
-      var argTypes = field.getDeclaredArguments();
-      var argNames = Object.keys(argTypes);
+      const argTypes = field.getDeclaredArguments();
+      const argNames = Object.keys(argTypes);
       if (
         !parentType.isQueryType() &&
         argNames.length === 1 &&
@@ -938,10 +950,10 @@ export function RelayQLPrinter(options: PrinterOptions) {
     }
   }
 
-  const forEachRecursiveField = function(
+  const forEachRecursiveField = (
     parentSelection: RelayQLField | RelayQLFragment,
     callback: (field: RelayQLField) => void,
-  ): void {
+  ): void => {
     parentSelection.getSelections().forEach(selection => {
       if (selection instanceof RelayQLField) {
         callback(selection);
@@ -957,18 +969,18 @@ export function RelayQLPrinter(options: PrinterOptions) {
     Object.keys(obj).forEach(key => {
       const value = obj[key];
       if (value !== NULL) {
-        properties.push(ts.createPropertyAssignment(ts.createIdentifier(key), value));
+        properties.push(ts.factory.createPropertyAssignment(ts.factory.createIdentifier(key), value));
       }
     });
-    return ts.createObjectLiteral(properties, /* multiLine */ true);
+    return ts.factory.createObjectLiteralExpression(properties, /* multiLine */ true);
   }
 
   function identify(str: string): Printable {
     return str.split('.').reduce((acc, name) => {
       if (!acc) {
-        return ts.createIdentifier(name);
+        return ts.factory.createIdentifier(name);
       }
-      return ts.createPropertyAccess(acc, ts.createIdentifier(name));
+      return ts.factory.createPropertyAccessExpression(acc, ts.factory.createIdentifier(name));
     }, null as null | Printable) as Printable;
   }
 
@@ -977,35 +989,35 @@ export function RelayQLPrinter(options: PrinterOptions) {
     Object.keys(obj).forEach(key => {
       const value = obj[key];
       if (value) {
-        properties.push(ts.createPropertyAssignment(ts.createIdentifier(key), ts.createLiteral(value)));
+        properties.push(ts.factory.createPropertyAssignment(ts.factory.createIdentifier(key), createLiteral(value)));
       }
     });
-    return ts.createObjectLiteral(properties, /* multiLine */ true);
+    return ts.factory.createObjectLiteralExpression(properties, /* multiLine */ true);
   }
 
   function printLiteralValue(value: any): Printable {
     if (value == null) {
       return NULL;
     } else if (Array.isArray(value)) {
-      return ts.createArrayLiteral(value.map(printLiteralValue), /* multiLine */ true);
+      return ts.factory.createArrayLiteralExpression(value.map(printLiteralValue), /* multiLine */ true);
     } else if (typeof value === 'object' && value != null) {
       const objectValue = value;
-      return ts.createObjectLiteral(
+      return ts.factory.createObjectLiteralExpression(
         Object.keys(objectValue).map(key =>
-          ts.createPropertyAssignment(key, printLiteralValue(objectValue[key])),
+          ts.factory.createPropertyAssignment(key, printLiteralValue(objectValue[key])),
         ),
         /* multiLine */ true,
       );
     } else {
-      return ts.createLiteral(value);
+      return createLiteral(value);
     }
   }
 
   function shallowFlatten(arr: Printable): Printable {
-    return ts.createCall(
-      ts.createPropertyAccess(
-        ts.createPropertyAccess(EMPTY_ARRAY, ts.createIdentifier('concat')),
-        ts.createIdentifier('apply'),
+    return ts.factory.createCallExpression(
+      ts.factory.createPropertyAccessExpression(
+        ts.factory.createPropertyAccessExpression(EMPTY_ARRAY, ts.factory.createIdentifier('concat')),
+        ts.factory.createIdentifier('apply'),
       ),
       undefined,
       [EMPTY_ARRAY, arr],

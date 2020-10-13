@@ -1,14 +1,14 @@
 // const createClassicNode = require('./createClassicNode');
 // const createCompatNode = require('./createCompatNode');
-import { createModernNode } from "./createModernNode";
-import { getFragmentNameParts } from "./getFragmentNameParts";
 import { DocumentNode, FragmentDefinitionNode, OperationDefinitionNode } from "graphql";
 import * as ts from 'typescript';
-import { NormalizedOptions } from "./Options";
-import { createCompatNode } from "./createCompatNode";
-import { createClassicNode } from "./createClassicNode";
-import { ScopeAnalyzer } from "./ScopeAnalyzer";
 import { setSourceMapRange } from "typescript";
+import { createClassicNode } from "./createClassicNode";
+import { createCompatNode } from "./createCompatNode";
+import { createModernNode } from "./createModernNode";
+import { getFragmentNameParts } from "./getFragmentNameParts";
+import { NormalizedOptions } from "./Options";
+import { ScopeAnalyzer } from "./ScopeAnalyzer";
 
 /**
  * Given a graphql`` tagged template literal, replace it with the appropriate
@@ -103,15 +103,22 @@ function createAST(
 
 const idRegex = /^[$a-zA-Z_][$a-z0-9A-Z_]*$/;
 
+function createStringLiteral(str: string) {
+	if (typeof str !== 'string') {
+		throw new TypeError(`str must be a string: ${str}`);
+	}
+	return ts.factory.createStringLiteral(str);
+}
+
 function createObject(obj: { [propName: string]: ts.Expression }, originalNode: ts.Node) {
   const propNames = Object.keys(obj);
 
   const assignments = propNames.map(propName => {
-    const name = idRegex.test(propName) ? ts.createIdentifier(propName) : ts.createLiteral(propName);
-    return ts.createPropertyAssignment(name, obj[propName])
+    const name = idRegex.test(propName) ? ts.factory.createIdentifier(propName) : createStringLiteral(propName);
+    return ts.factory.createPropertyAssignment(name, obj[propName])
   });
 
-  const objectLiteralNode = ts.createObjectLiteral(assignments, /* multiLine */ true);
+  const objectLiteralNode = ts.factory.createObjectLiteralExpression(assignments, /* multiLine */ true);
   ts.setSourceMapRange(objectLiteralNode, ts.getSourceMapRange(originalNode));
   return objectLiteralNode;
 }

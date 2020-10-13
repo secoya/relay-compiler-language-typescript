@@ -7,16 +7,17 @@ import { print } from "graphql";
 
 const GENERATED = './__generated__/';
 
-import { OperationDefinitionNode, FragmentDefinitionNode } from "graphql";
+import { FragmentDefinitionNode, OperationDefinitionNode } from "graphql";
 import { NormalizedOptions } from "./Options";
 
 function createVariableStatement(type: ts.NodeFlags.Const | ts.NodeFlags.Let | undefined, name: ts.Identifier, initializer: ts.Expression): ts.VariableStatement {
-  return ts.createVariableStatement(
+  return ts.factory.createVariableStatement(
     undefined,
-    ts.createVariableDeclarationList(
+    ts.factory.createVariableDeclarationList(
       [
-        ts.createVariableDeclaration(
+        ts.factory.createVariableDeclaration(
           name,
+          undefined,
           undefined,
           initializer
         ),
@@ -24,6 +25,13 @@ function createVariableStatement(type: ts.NodeFlags.Const | ts.NodeFlags.Let | u
       type,
     ),
   );
+}
+
+function createStringLiteral(str: string) {
+	if (typeof str !== 'string') {
+		throw new TypeError(`str must be a string: ${str}`);
+	}
+	return ts.factory.createStringLiteral(str);
 }
 
 /**
@@ -50,23 +58,26 @@ export function createModernNode(
     .update(print(graphqlDefinition), 'utf8')
     .digest('hex');
 
-  const requireGraphQLModule = ts.createPropertyAccess(ts.createCall(ts.createIdentifier('require'), undefined, [
-    ts.createLiteral(requiredPath),
-  ]), ts.createIdentifier('default'));
+  const requireGraphQLModule = ts.factory.createPropertyAccessExpression(
+    ts.factory.createCallExpression(
+      ts.factory.createIdentifier('require'),
+      undefined,
+      [createStringLiteral(requiredPath)],
+    ), ts.factory.createIdentifier('default'));
 
-  const bodyStatements: ts.Statement[] = [ts.createReturn(requireGraphQLModule)];
+  const bodyStatements: ts.Statement[] = [ts.factory.createReturnStatement(requireGraphQLModule)];
   if (opts.isDevVariable != null || opts.isDevelopment) {
-    const nodeVariable = ts.createIdentifier('node');
-    const nodeDotHash = ts.createPropertyAccess(nodeVariable, ts.createIdentifier('hash'));
+    const nodeVariable = ts.factory.createIdentifier('node');
+    const nodeDotHash = ts.factory.createPropertyAccessExpression(nodeVariable, ts.factory.createIdentifier('hash'));
     let checkStatements: ts.Statement[] = [
       createVariableStatement(ts.NodeFlags.Const, nodeVariable, requireGraphQLModule),
-      ts.createIf(
-        ts.createLogicalAnd(
+      ts.factory.createIfStatement(
+        ts.factory.createLogicalAnd(
           nodeDotHash,
-          ts.createStrictInequality(nodeDotHash, ts.createLiteral(hash)),
+          ts.factory.createStrictInequality(nodeDotHash, createStringLiteral(hash)),
         ),
-        ts.createBlock([
-          ts.createStatement(
+        ts.factory.createBlock([
+          ts.factory.createExpressionStatement(
             warnNeedsRebuild(definitionName, opts.buildCommand),
           ),
         ], /* multiLine */ true),
@@ -74,26 +85,26 @@ export function createModernNode(
     ];
     if (opts.isDevVariable != null) {
       checkStatements = [
-        ts.createIf(
-          ts.createIdentifier(opts.isDevVariable),
-          ts.createBlock(checkStatements, /* multiLine */ true),
+        ts.factory.createIfStatement(
+          ts.factory.createIdentifier(opts.isDevVariable),
+          ts.factory.createBlock(checkStatements, /* multiLine */ true),
         ),
       ];
     }
     bodyStatements.unshift(...checkStatements);
   }
-  return ts.createFunctionExpression(undefined, undefined, undefined, undefined, [], undefined, ts.createBlock(bodyStatements, /* multiLine */ true));
+  return ts.factory.createFunctionExpression(undefined, undefined, undefined, undefined, [], undefined, ts.factory.createBlock(bodyStatements, /* multiLine */ true));
 }
 
 function warnNeedsRebuild(
   definitionName: string,
   buildCommand?: string,
 ): ts.Expression {
-  return ts.createCall(
-    ts.createPropertyAccess(ts.createIdentifier('console'), ts.createIdentifier('error')),
+  return ts.factory.createCallExpression(
+    ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier('console'), ts.factory.createIdentifier('error')),
     undefined,
     [
-      ts.createLiteral(
+      createStringLiteral(
         `The definition of '${definitionName}' appears to have changed. Run ` +
         '`' +
         (buildCommand || 'relay-compiler') +

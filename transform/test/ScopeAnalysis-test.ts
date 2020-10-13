@@ -1,5 +1,5 @@
-import { ScopeAnalyzer, BindingKind } from "../src/ScopeAnalyzer";
 import * as ts from "typescript";
+import { BindingKind, ScopeAnalyzer } from "../src/ScopeAnalyzer";
 
 function createSourceFile(text: string): ts.SourceFile {
   return ts.createSourceFile("test.ts", text, ts.ScriptTarget.ES2015, true);
@@ -53,7 +53,7 @@ describe("Scope analysis", () => {
 
     expect(analyzer.getBindingAtNode(sf, "x")).toBe(null);
     expect(analyzer.getBindingAtNode(sf, "test")).toBe(BindingKind.Variable);
-    expect(analyzer.getBindingAtNode((sf.statements[0] as ts.FunctionDeclaration).body, "x")).toBe(BindingKind.Variable);
+    expect(analyzer.getBindingAtNode((sf.statements[0] as ts.FunctionDeclaration).body!, "x")).toBe(BindingKind.Variable);
     expect(analyzer.getBindingAtNode(sf.statements[0], "test")).toBe(BindingKind.Variable);
   });
 });

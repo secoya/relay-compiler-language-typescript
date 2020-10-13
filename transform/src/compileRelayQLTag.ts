@@ -1,5 +1,5 @@
-import { createTransformError } from "./createTransformError";
 import * as ts from "typescript";
+import { createTransformError } from "./createTransformError";
 import { NormalizedOptions } from "./Options";
 import { RelayQLTransformer } from "./RelayQLTransformer";
 

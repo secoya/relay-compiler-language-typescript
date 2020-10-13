@@ -1,5 +1,5 @@
 import * as ts from 'typescript';
-import { isForInStatement, isFunctionDeclaration, isFunctionExpression } from 'typescript';
+import { isFunctionDeclaration, isFunctionExpression } from 'typescript';
 const enum BindingScope {
   FunctionScope,
   LexicalScope
@@ -142,7 +142,8 @@ export class ScopeAnalyzer {
         return;
       }
       if (ts.isVariableDeclarationList(child)) {
-        const bindingScope = (child.flags & ts.NodeFlags.BlockScoped) != 0 ? BindingScope.LexicalScope : BindingScope.FunctionScope;
+        // tslint:disable-next-line: no-bitwise
+        const bindingScope = (child.flags & ts.NodeFlags.BlockScoped) !== 0 ? BindingScope.LexicalScope : BindingScope.FunctionScope;
         let bindingKind = child.parent != null && ts.isVariableStatement(child.parent) && child.parent.modifiers != null && child.parent.modifiers.find(x => x.kind === ts.SyntaxKind.ExportKeyword) != null ? BindingKind.Export : BindingKind.Variable;
         child.declarations.forEach(decl => {
           if (decl.initializer != null) {

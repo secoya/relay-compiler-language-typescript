@@ -1,18 +1,18 @@
-import { transformer } from '../src';
-import * as ts from 'typescript';
 import * as path from 'path';
+const { generateTestsFromFixtures } = require('relay-test-utils-internal/lib/generateTestsFromFixtures');
+import * as ts from 'typescript';
+import { transformer } from '../src';
 import { Options } from '../src/Options';
-import { generateTestsFromFixtures } from 'relay-test-utils/lib/RelayModernTestUtils'
 
 function transformWithOptions(options: Options, fileName: string) {
-  return (text, providedFileName?: string) =>
+  return (text: string, providedFileName?: string) =>
     ts.transpileModule(text, {
       compilerOptions: {
         target: ts.ScriptTarget.ES2017,
         jsx: ts.JsxEmit.Preserve,
         sourceMap: false,
       },
-      fileName: fileName,
+      fileName,
       transformers: {
         before: [transformer(options)],
       },

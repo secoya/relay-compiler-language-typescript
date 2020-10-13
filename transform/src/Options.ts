@@ -1,8 +1,8 @@
-import { GraphQLSchema, buildClientSchema, buildASTSchema, parse } from "graphql";
 import * as fs from 'fs';
+import { buildASTSchema, buildClientSchema, GraphQLSchema, parse } from "graphql";
 import * as path from 'path';
-import { RelayQLTransformer } from "./RelayQLTransformer";
 import { SCHEMA_EXTENSION } from "./GraphQLRelayDirective";
+import { RelayQLTransformer } from "./RelayQLTransformer";
 
 export interface Options {
 	artifactDirectory?: string;
