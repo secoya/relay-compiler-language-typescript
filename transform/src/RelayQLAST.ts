@@ -13,12 +13,16 @@
 
 import { RelayTransformError } from "./RelayTransformError";
 
-import { find } from "./find";
 import * as util from "util";
+import { find } from "./find";
 
-import { GraphQLRelayDirective } from "./GraphQLRelayDirective";
-import { ID } from "./RelayQLNodeInterface";
 import {
+  ArgumentNode,
+  ASTNode,
+  DirectiveNode,
+  FieldNode,
+  FragmentDefinitionNode,
+  FragmentSpreadNode,
   GraphQLBoolean,
   GraphQLEnumType,
   GraphQLFloat,
@@ -30,28 +34,24 @@ import {
   GraphQLNonNull,
   GraphQLObjectType,
   GraphQLScalarType,
+  GraphQLSchema,
   GraphQLString,
+  GraphQLType,
   GraphQLUnionType,
+  InlineFragmentNode,
   isAbstractType,
+  Location,
+  NamedTypeNode,
+  NameNode,
+  OperationDefinitionNode,
   SchemaMetaFieldDef,
+  SelectionSetNode,
   TypeMetaFieldDef,
   TypeNameMetaFieldDef,
-  NamedTypeNode,
-  GraphQLType,
-  ASTNode,
-  SelectionSetNode,
-  ArgumentNode,
-  DirectiveNode,
-  FieldNode,
-  FragmentDefinitionNode,
-  FragmentSpreadNode,
-  InlineFragmentNode,
-  Location,
-  OperationDefinitionNode,
   ValueNode,
-  GraphQLSchema,
-  NameNode,
 } from "graphql";
+import { GraphQLRelayDirective } from "./GraphQLRelayDirective";
+import { ID } from "./RelayQLNodeInterface";
 
 // TODO: Import types from `graphql`.
 type GraphQLSchemaArgumentType = any;
@@ -97,7 +97,7 @@ class RelayQLNode<T extends ASTNode> {
     return find(this.getFields(), field => field.getName() === fieldName);
   }
 
-  getFields(): Array<RelayQLField> {
+  getFields(): RelayQLField[] {
     const fields: RelayQLField[] = [];
     this.getSelections().forEach(selection => {
       if (selection instanceof RelayQLField) {
@@ -107,7 +107,7 @@ class RelayQLNode<T extends ASTNode> {
     return fields;
   }
 
-  getSelections(): Array<RelayQLSelection> {
+  getSelections(): RelayQLSelection[] {
     if (!this.ast.selectionSet) {
       return [];
     }
@@ -132,7 +132,7 @@ class RelayQLNode<T extends ASTNode> {
     });
   }
 
-  getDirectives(): Array<RelayQLDirective> {
+  getDirectives(): RelayQLDirective[] {
     // $FlowFixMe
     return (this.ast.directives || [])
       .filter(directive => directive.name.value !== 'fb_native_field')
@@ -194,7 +194,7 @@ export class RelayQLFragment extends RelayQLDefinition<
   }
 
   getType(): RelayQLType {
-    let type = this.ast.typeCondition;
+    const type = this.ast.typeCondition;
     if (type) {
       let actualType: NamedTypeNode = type;
       // Convert `ListType` and `NonNullType` into `NamedType`.
@@ -293,7 +293,7 @@ export class RelayQLField extends RelayQLNode<FieldNode> {
     return find(this.getArguments(), arg => arg.getName() === argName);
   }
 
-  getArguments(): Array<RelayQLArgument> {
+  getArguments(): RelayQLArgument[] {
     const argTypes = this.fieldDef.getDeclaredArguments();
     return (this.ast.arguments || []).map(arg => {
       const argName = arg.name.value;
@@ -332,7 +332,7 @@ export class RelayQLFragmentSpread extends RelayQLNode<FragmentSpreadNode> {
     return this.ast.name.value;
   }
 
-  getSelections(): Array<RelayQLSelection> {
+  getSelections(): RelayQLSelection[] {
     throw new RelayTransformError(
       'Cannot get selection of a fragment spread.',
       this.getLocation(),
@@ -395,7 +395,7 @@ export class RelayQLDirective {
     return this.ast.name.value;
   }
 
-  getArguments(): Array<RelayQLArgument> {
+  getArguments(): RelayQLArgument[] {
     return (this.ast.arguments || []).map(arg => {
       const argName = arg.name.value;
       const argType = this.argTypes[argName];
@@ -590,7 +590,7 @@ export class RelayQLType {
       : null;
   }
 
-  getInterfaces(): Array<RelayQLType> {
+  getInterfaces(): RelayQLType[] {
     if (this.schemaUnmodifiedType instanceof GraphQLObjectType) {
       return this.schemaUnmodifiedType
         .getInterfaces()
@@ -599,7 +599,7 @@ export class RelayQLType {
     return [];
   }
 
-  getConcreteTypes(): Array<RelayQLType> {
+  getConcreteTypes(): RelayQLType[] {
     if (!
       this.isAbstract()
     ) {

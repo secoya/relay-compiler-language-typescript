@@ -386,7 +386,10 @@ var foo = function () {
                 ],
                 id: Relay.QL.__id(),
                 kind: "Fragment",
-                metadata: {},
+                metadata: {
+                    isAbstract: false,
+                    isTrackingEnabled: false
+                },
                 name: "User",
                 type: "User"
             }
@@ -643,7 +646,10 @@ module.exports = RelayCompatContainer.createContainer(CompatProfilePic, {
                         ]),
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile_passing",
                         type: "User"
                     };
@@ -741,7 +747,10 @@ module.exports = RelayCompatContainer.createContainer(CompatProfilePic, {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile_receiving",
                         type: "User"
                     };
@@ -794,7 +803,10 @@ module.exports = RelayCompatContainer.createContainer(CompatProfilePic, {
                         ]),
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile_passingWithDefault",
                         type: "User"
                     };
@@ -861,7 +873,10 @@ module.exports = RelayCompatContainer.createContainer(CompatProfilePic, {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile_receivingGlobals",
                         type: "User"
                     };
@@ -975,7 +990,10 @@ module.exports = RelayCompatContainer.createContainer(CompatProfilePic, {
                         ]),
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile_passing",
                         type: "User"
                     };
@@ -1073,7 +1091,10 @@ module.exports = RelayCompatContainer.createContainer(CompatProfilePic, {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile_receiving",
                         type: "User"
                     };
@@ -1126,7 +1147,10 @@ module.exports = RelayCompatContainer.createContainer(CompatProfilePic, {
                         ]),
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile_passingWithDefault",
                         type: "User"
                     };
@@ -1193,7 +1217,10 @@ module.exports = RelayCompatContainer.createContainer(CompatProfilePic, {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile_receivingGlobals",
                         type: "User"
                     };
@@ -1362,7 +1389,10 @@ module.exports = RelayClassic.createFragmentContainer(CompatProfile, {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile_viewer",
                         type: "Viewer"
                     };
@@ -1483,7 +1513,10 @@ module.exports = RelayClassic.createFragmentContainer(CompatProfile, {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile_viewer",
                         type: "Viewer"
                     };
@@ -1610,7 +1643,9 @@ var x = function () {
         id: Relay.QL.__id(),
         kind: "Fragment",
         metadata: {
-            pattern: true
+            pattern: true,
+            isAbstract: false,
+            isTrackingEnabled: false
         },
         name: "MyComponentRelayQL",
         type: "User"
@@ -1866,7 +1901,10 @@ var x = function () {
                 ],
                 id: Relay.QL.__id(),
                 kind: "Fragment",
-                metadata: {},
+                metadata: {
+                    isAbstract: false,
+                    isTrackingEnabled: false
+                },
                 name: "User",
                 type: "User"
             }
@@ -2108,7 +2146,10 @@ var x = function () {
                 ],
                 id: Relay.QL.__id(),
                 kind: "Fragment",
-                metadata: {},
+                metadata: {
+                    isAbstract: false,
+                    isTrackingEnabled: false
+                },
                 name: "User",
                 type: "User"
             }
@@ -2322,7 +2363,10 @@ var x = function () {
                 ],
                 id: Relay.QL.__id(),
                 kind: "Fragment",
-                metadata: {},
+                metadata: {
+                    isAbstract: false,
+                    isTrackingEnabled: false
+                },
                 name: "User",
                 type: "User"
             }
@@ -2512,7 +2556,10 @@ var x = function () {
                 ],
                 id: Relay.QL.__id(),
                 kind: "Fragment",
-                metadata: {},
+                metadata: {
+                    isAbstract: false,
+                    isTrackingEnabled: false
+                },
                 name: "User",
                 type: "User"
             }
@@ -2682,6 +2729,7 @@ var x = function () {
                                         id: Relay.QL.__id(),
                                         kind: "Fragment",
                                         metadata: {
+                                            isAbstract: false,
                                             isTrackingEnabled: true
                                         },
                                         name: "UserConnectionEdge",
@@ -2840,6 +2888,7 @@ var x = function () {
                                         id: Relay.QL.__id(),
                                         kind: "Fragment",
                                         metadata: {
+                                            isAbstract: false,
                                             isTrackingEnabled: true
                                         },
                                         name: "UserConnectionEdge",
@@ -2911,7 +2960,10 @@ var x = function () {
                 ],
                 id: Relay.QL.__id(),
                 kind: "Fragment",
-                metadata: {},
+                metadata: {
+                    isAbstract: false,
+                    isTrackingEnabled: false
+                },
                 name: "User",
                 type: "User"
             }
@@ -3143,7 +3195,10 @@ var x = function () {
                 ],
                 id: Relay.QL.__id(),
                 kind: "Fragment",
-                metadata: {},
+                metadata: {
+                    isAbstract: false,
+                    isTrackingEnabled: false
+                },
                 name: "User",
                 type: "User"
             }
@@ -3326,7 +3381,10 @@ var x = function () {
                 ],
                 id: Relay.QL.__id(),
                 kind: "Fragment",
-                metadata: {},
+                metadata: {
+                    isAbstract: false,
+                    isTrackingEnabled: false
+                },
                 name: "User",
                 type: "User"
             }
@@ -3383,7 +3441,10 @@ Relay.createContainer(Component, {
                 ],
                 id: Relay.QL.__id(),
                 kind: "Fragment",
-                metadata: {},
+                metadata: {
+                    isAbstract: false,
+                    isTrackingEnabled: false
+                },
                 name: "MyComponent_ViewerRelayQL",
                 type: "Viewer"
             };
@@ -3555,7 +3616,10 @@ module.exports = RelayCompatContainer.createContainer(CompatProfilePic, {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile_user",
                         type: "User"
                     };
@@ -3621,7 +3685,10 @@ module.exports = RelayCompatContainer.createContainer(CompatProfilePic, {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile_user2",
                         type: "User"
                     };
@@ -3738,7 +3805,10 @@ module.exports = RelayCompatContainer.createContainer(CompatProfilePic, {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile_user",
                         type: "User"
                     };
@@ -3804,7 +3874,10 @@ module.exports = RelayCompatContainer.createContainer(CompatProfilePic, {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile_user2",
                         type: "User"
                     };
@@ -4333,7 +4406,10 @@ module.exports = createRefetchContainer(RefetchExample, {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "RefetchExample_user",
                         type: "User"
                     };
@@ -4401,7 +4477,10 @@ module.exports = createRefetchContainer(RefetchExample, {
                     ],
                     id: RelayQL_GENERATED.__id(),
                     kind: "Fragment",
-                    metadata: {},
+                    metadata: {
+                        isAbstract: false,
+                        isTrackingEnabled: false
+                    },
                     name: "RefetchExampleRefetchQuery",
                     type: "Query"
                 };
@@ -4490,7 +4569,10 @@ module.exports = createRefetchContainer(RefetchExample, {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "RefetchExample_user",
                         type: "User"
                     };
@@ -4558,7 +4640,10 @@ module.exports = createRefetchContainer(RefetchExample, {
                     ],
                     id: RelayQL_GENERATED.__id(),
                     kind: "Fragment",
-                    metadata: {},
+                    metadata: {
+                        isAbstract: false,
+                        isTrackingEnabled: false
+                    },
                     name: "RefetchExampleRefetchQuery",
                     type: "Query"
                 };
@@ -4637,7 +4722,10 @@ var x = function () {
                 ],
                 id: Relay.QL.__id(),
                 kind: "Fragment",
-                metadata: {},
+                metadata: {
+                    isAbstract: false,
+                    isTrackingEnabled: false
+                },
                 name: "User",
                 type: "User"
             }
@@ -4725,7 +4813,10 @@ var x = function () {
                 ],
                 id: Relay.QL.__id(),
                 kind: "Fragment",
-                metadata: {},
+                metadata: {
+                    isAbstract: false,
+                    isTrackingEnabled: false
+                },
                 name: "User",
                 type: "User"
             }
@@ -4838,7 +4929,10 @@ var x = function () {
                 ],
                 id: Relay.QL.__id(),
                 kind: "Fragment",
-                metadata: {},
+                metadata: {
+                    isAbstract: false,
+                    isTrackingEnabled: false
+                },
                 name: "User",
                 type: "User"
             }
@@ -4950,7 +5044,10 @@ var x = function () {
                 ],
                 id: Relay.QL.__id(),
                 kind: "Fragment",
-                metadata: {},
+                metadata: {
+                    isAbstract: false,
+                    isTrackingEnabled: false
+                },
                 name: "User",
                 type: "User"
             }
@@ -5076,7 +5173,10 @@ var x = function () {
         ],
         id: Relay.QL.__id(),
         kind: "Fragment",
-        metadata: {},
+        metadata: {
+            isAbstract: false,
+            isTrackingEnabled: false
+        },
         name: "MyComponentRelayQL",
         type: "User"
     };
@@ -5259,7 +5359,10 @@ var x = function () {
                 ],
                 id: Relay.QL.__id(),
                 kind: "Fragment",
-                metadata: {},
+                metadata: {
+                    isAbstract: false,
+                    isTrackingEnabled: false
+                },
                 name: "User",
                 type: "User"
             }
@@ -5453,7 +5556,10 @@ var x = function () {
                 ],
                 id: Relay.QL.__id(),
                 kind: "Fragment",
-                metadata: {},
+                metadata: {
+                    isAbstract: false,
+                    isTrackingEnabled: false
+                },
                 name: "User",
                 type: "User"
             }
@@ -5554,7 +5660,10 @@ var foo = function () {
         ],
         id: RelayClassic.QL.__id(),
         kind: "Fragment",
-        metadata: {},
+        metadata: {
+            isAbstract: false,
+            isTrackingEnabled: false
+        },
         name: "MyComponentRelayQL",
         type: "User"
     };
@@ -5655,7 +5764,10 @@ var x = function () {
                 ],
                 id: Relay.QL.__id(),
                 kind: "Fragment",
-                metadata: {},
+                metadata: {
+                    isAbstract: false,
+                    isTrackingEnabled: false
+                },
                 name: "User",
                 type: "User"
             }
@@ -5704,7 +5816,8 @@ var x = function () {
         id: Relay.QL.__id(),
         kind: "Fragment",
         metadata: {
-            isAbstract: true
+            isAbstract: true,
+            isTrackingEnabled: false
         },
         name: "MyComponentRelayQL",
         type: "Node"
@@ -5825,7 +5938,10 @@ module.exports = RelayCompatContainer.createContainer(CompatProfile, {
                         ]),
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile_user",
                         type: "User"
                     };
@@ -5905,7 +6021,10 @@ module.exports = RelayCompatContainer.createContainer(CompatProfile, {
                         ]),
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile_user",
                         type: "User"
                     };
@@ -5948,7 +6067,8 @@ var x = function () {
         kind: "Fragment",
         metadata: {
             plural: true,
-            isAbstract: true
+            isAbstract: true,
+            isTrackingEnabled: false
         },
         name: "MyComponentRelayQL",
         type: "Node"
@@ -6003,7 +6123,8 @@ var x = function () {
         id: Relay.QL.__id(),
         kind: "Fragment",
         metadata: {
-            isAbstract: true
+            isAbstract: true,
+            isTrackingEnabled: false
         },
         name: "Foo",
         type: "Node"
@@ -6033,7 +6154,8 @@ var y = function () {
         id: Relay.QL.__id(),
         kind: "Fragment",
         metadata: {
-            isAbstract: true
+            isAbstract: true,
+            isTrackingEnabled: false
         },
         name: "Bar",
         type: "Node"
@@ -6072,7 +6194,8 @@ var x = function () {
         id: Relay.QL.__id(),
         kind: "Fragment",
         metadata: {
-            isAbstract: true
+            isAbstract: true,
+            isTrackingEnabled: false
         },
         name: "FragmentNameHere",
         type: "Node"
@@ -6123,7 +6246,10 @@ var x = function () {
                 ],
                 id: Relay.QL.__id(),
                 kind: "Fragment",
-                metadata: {},
+                metadata: {
+                    isAbstract: false,
+                    isTrackingEnabled: false
+                },
                 name: "User",
                 type: "User"
             },
@@ -6151,7 +6277,8 @@ var x = function () {
                 id: Relay.QL.__id(),
                 kind: "Fragment",
                 metadata: {
-                    isAbstract: true
+                    isAbstract: true,
+                    isTrackingEnabled: false
                 },
                 name: "IdFragment",
                 type: "Node"
@@ -6160,7 +6287,8 @@ var x = function () {
         id: Relay.QL.__id(),
         kind: "Fragment",
         metadata: {
-            isAbstract: true
+            isAbstract: true,
+            isTrackingEnabled: false
         },
         name: "MyComponentRelayQL",
         type: "Actor"
@@ -6201,7 +6329,8 @@ var x = function (RQL_0) {
         id: Relay.QL.__id(),
         kind: "Fragment",
         metadata: {
-            isAbstract: true
+            isAbstract: true,
+            isTrackingEnabled: false
         },
         name: "MyComponentRelayQL",
         type: "Node"
@@ -6246,7 +6375,8 @@ var x = function (RQL_0) {
         id: Relay.QL.__id(),
         kind: "Fragment",
         metadata: {
-            isAbstract: true
+            isAbstract: true,
+            isTrackingEnabled: false
         },
         name: "MyComponentRelayQL",
         type: "Node"
@@ -6308,7 +6438,10 @@ var x = function () {
                 ],
                 id: Relay.QL.__id(),
                 kind: "Fragment",
-                metadata: {},
+                metadata: {
+                    isAbstract: false,
+                    isTrackingEnabled: false
+                },
                 name: "User",
                 type: "User"
             }
@@ -6316,7 +6449,8 @@ var x = function () {
         id: Relay.QL.__id(),
         kind: "Fragment",
         metadata: {
-            isAbstract: true
+            isAbstract: true,
+            isTrackingEnabled: false
         },
         name: "MyComponentRelayQL",
         type: "Node"
@@ -6605,7 +6739,10 @@ function SomeTopLevelView() {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "ExampleQuery",
                         type: "Query"
                     };
@@ -6727,7 +6864,10 @@ function SomeTopLevelView() {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "ExampleQuery",
                         type: "Query"
                     };
@@ -6911,7 +7051,10 @@ var x = function () {
                 ],
                 id: Relay.QL.__id(),
                 kind: "Fragment",
-                metadata: {},
+                metadata: {
+                    isAbstract: false,
+                    isTrackingEnabled: false
+                },
                 name: "User",
                 type: "User"
             }
@@ -7096,7 +7239,10 @@ var x = function () {
                                 ],
                                 id: Relay.QL.__id(),
                                 kind: "Fragment",
-                                metadata: {},
+                                metadata: {
+                                    isAbstract: false,
+                                    isTrackingEnabled: false
+                                },
                                 name: "Story",
                                 type: "Story"
                             }
@@ -7163,7 +7309,10 @@ var x = function () {
         ],
         id: Relay.QL.__id(),
         kind: "Fragment",
-        metadata: {},
+        metadata: {
+            isAbstract: false,
+            isTrackingEnabled: false
+        },
         name: "MyComponentRelayQL",
         type: "NewsFeedConnection"
     };
@@ -7345,7 +7494,10 @@ var x = function () {
                 ],
                 id: Relay.QL.__id(),
                 kind: "Fragment",
-                metadata: {},
+                metadata: {
+                    isAbstract: false,
+                    isTrackingEnabled: false
+                },
                 name: "User",
                 type: "User"
             }
@@ -7394,7 +7546,8 @@ var x = function () {
         id: Relay.QL.__id(),
         kind: "Fragment",
         metadata: {
-            isAbstract: true
+            isAbstract: true,
+            isTrackingEnabled: false
         },
         name: "MyComponentRelayQL",
         type: "Node"
@@ -7459,7 +7612,10 @@ var x = function () {
         ],
         id: Relay.QL.__id(),
         kind: "Fragment",
-        metadata: {},
+        metadata: {
+            isAbstract: false,
+            isTrackingEnabled: false
+        },
         name: "MyComponentRelayQL",
         type: "User"
     };
@@ -7962,7 +8118,10 @@ const CompatViewerQuery = {
                                     ]),
                                     id: RelayQL_GENERATED.__id(),
                                     kind: "Fragment",
-                                    metadata: {},
+                                    metadata: {
+                                        isAbstract: false,
+                                        isTrackingEnabled: false
+                                    },
                                     name: "User",
                                     type: "User"
                                 }
@@ -7980,7 +8139,10 @@ const CompatViewerQuery = {
                     ],
                     id: RelayQL_GENERATED.__id(),
                     kind: "Fragment",
-                    metadata: {},
+                    metadata: {
+                        isAbstract: false,
+                        isTrackingEnabled: false
+                    },
                     name: "CompatViewerQuery",
                     type: "Query"
                 };
@@ -8140,7 +8302,10 @@ const CompatViewerQuery = {
                                     ]),
                                     id: RelayQL_GENERATED.__id(),
                                     kind: "Fragment",
-                                    metadata: {},
+                                    metadata: {
+                                        isAbstract: false,
+                                        isTrackingEnabled: false
+                                    },
                                     name: "User",
                                     type: "User"
                                 }
@@ -8158,7 +8323,10 @@ const CompatViewerQuery = {
                     ],
                     id: RelayQL_GENERATED.__id(),
                     kind: "Fragment",
-                    metadata: {},
+                    metadata: {
+                        isAbstract: false,
+                        isTrackingEnabled: false
+                    },
                     name: "CompatViewerQuery",
                     type: "Query"
                 };
@@ -8792,7 +8960,10 @@ module.exports = RelayCompatContainer.createContainer(CompatProfile, {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile_user",
                         type: "User"
                     };
@@ -8867,7 +9038,10 @@ module.exports = RelayCompatContainer.createContainer(CompatProfile, {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile_user",
                         type: "User"
                     };
@@ -8979,7 +9153,10 @@ module.exports = RelayCompatContainer.createContainer(CompatProfile, {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile_user",
                         type: "User"
                     };
@@ -9052,7 +9229,10 @@ module.exports = RelayCompatContainer.createContainer(CompatProfile, {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile_user",
                         type: "User"
                     };
@@ -9175,7 +9355,10 @@ module.exports = RelayCompatContainer.createContainer(CompatProfile, {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile_user",
                         type: "User"
                     };
@@ -9212,7 +9395,10 @@ module.exports = RelayCompatContainer.createContainer(CompatProfile, {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile_viewer",
                         type: "User"
                     };
@@ -9289,7 +9475,10 @@ module.exports = RelayCompatContainer.createContainer(CompatProfile, {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile_user",
                         type: "User"
                     };
@@ -9326,7 +9515,10 @@ module.exports = RelayCompatContainer.createContainer(CompatProfile, {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile_viewer",
                         type: "User"
                     };
@@ -9470,7 +9662,10 @@ var x = function () {
                 ],
                 id: Relay.QL.__id(),
                 kind: "Fragment",
-                metadata: {},
+                metadata: {
+                    isAbstract: false,
+                    isTrackingEnabled: false
+                },
                 name: "Story",
                 type: "Story"
             }
@@ -9629,7 +9824,10 @@ const CompatViewerQuery = {
                                     ]),
                                     id: RelayQL_GENERATED.__id(),
                                     kind: "Fragment",
-                                    metadata: {},
+                                    metadata: {
+                                        isAbstract: false,
+                                        isTrackingEnabled: false
+                                    },
                                     name: "User",
                                     type: "User"
                                 }
@@ -9647,7 +9845,10 @@ const CompatViewerQuery = {
                     ],
                     id: RelayQL_GENERATED.__id(),
                     kind: "Fragment",
-                    metadata: {},
+                    metadata: {
+                        isAbstract: false,
+                        isTrackingEnabled: false
+                    },
                     name: "CompatViewerQuery",
                     type: "Query"
                 };
@@ -9759,7 +9960,10 @@ const CompatViewerQuery = {
                                     ]),
                                     id: RelayQL_GENERATED.__id(),
                                     kind: "Fragment",
-                                    metadata: {},
+                                    metadata: {
+                                        isAbstract: false,
+                                        isTrackingEnabled: false
+                                    },
                                     name: "User",
                                     type: "User"
                                 }
@@ -9777,7 +9981,10 @@ const CompatViewerQuery = {
                     ],
                     id: RelayQL_GENERATED.__id(),
                     kind: "Fragment",
-                    metadata: {},
+                    metadata: {
+                        isAbstract: false,
+                        isTrackingEnabled: false
+                    },
                     name: "CompatViewerQuery",
                     type: "Query"
                 };
@@ -10038,7 +10245,10 @@ var x = function () {
                 ],
                 id: Relay.QL.__id(),
                 kind: "Fragment",
-                metadata: {},
+                metadata: {
+                    isAbstract: false,
+                    isTrackingEnabled: false
+                },
                 name: "User",
                 type: "User"
             }
@@ -10140,7 +10350,10 @@ var x = function () {
                 ],
                 id: Relay.QL.__id(),
                 kind: "Fragment",
-                metadata: {},
+                metadata: {
+                    isAbstract: false,
+                    isTrackingEnabled: false
+                },
                 name: "User",
                 type: "User"
             }
@@ -10239,7 +10452,10 @@ var x = function () {
                 ],
                 id: Relay.QL.__id(),
                 kind: "Fragment",
-                metadata: {},
+                metadata: {
+                    isAbstract: false,
+                    isTrackingEnabled: false
+                },
                 name: "User",
                 type: "User"
             }
@@ -10338,7 +10554,10 @@ var x = function () {
                 ],
                 id: Relay.QL.__id(),
                 kind: "Fragment",
-                metadata: {},
+                metadata: {
+                    isAbstract: false,
+                    isTrackingEnabled: false
+                },
                 name: "User",
                 type: "User"
             }
@@ -10457,7 +10676,10 @@ var x = function (RQL_0, RQL_1, RQL_2, RQL_3, RQL_4, RQL_5, RQL_6, RQL_7, RQL_8,
                 ],
                 id: Relay.QL.__id(),
                 kind: "Fragment",
-                metadata: {},
+                metadata: {
+                    isAbstract: false,
+                    isTrackingEnabled: false
+                },
                 name: "User",
                 type: "User"
             },
@@ -10532,7 +10754,10 @@ var x = function () {
                 ],
                 id: Relay.QL.__id(),
                 kind: "Fragment",
-                metadata: {},
+                metadata: {
+                    isAbstract: false,
+                    isTrackingEnabled: false
+                },
                 name: "Story",
                 type: "Story"
             }
@@ -10856,7 +11081,10 @@ module.exports = RelayCompatContainer.createContainer(CompatProfile, {
                         ]),
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile",
                         type: "User"
                     };
@@ -10932,7 +11160,10 @@ module.exports = RelayCompatContainer.createContainer(CompatProfile, {
                         ]),
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile",
                         type: "User"
                     };
@@ -11055,7 +11286,10 @@ module.exports = RelayCompatContainer.createContainer(CompatProfile, {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile",
                         type: "User"
                     };
@@ -11092,7 +11326,10 @@ module.exports = RelayCompatContainer.createContainer(CompatProfile, {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile_viewer",
                         type: "User"
                     };
@@ -11169,7 +11406,10 @@ module.exports = RelayCompatContainer.createContainer(CompatProfile, {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile",
                         type: "User"
                     };
@@ -11206,7 +11446,10 @@ module.exports = RelayCompatContainer.createContainer(CompatProfile, {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile_viewer",
                         type: "User"
                     };
@@ -11520,7 +11763,10 @@ module.exports = Relay.createFragmentContainer(CompatProfile, {
                         ]),
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile_viewer",
                         type: "Viewer"
                     };
@@ -11553,7 +11799,10 @@ module.exports = Relay.createFragmentContainer(CompatProfile, {
                         ]),
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile_page",
                         type: "Page"
                     };
@@ -11639,7 +11888,10 @@ module.exports = Relay.createFragmentContainer(CompatProfile, {
                         ]),
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile_viewer",
                         type: "Viewer"
                     };
@@ -11672,7 +11924,10 @@ module.exports = Relay.createFragmentContainer(CompatProfile, {
                         ]),
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatProfile_page",
                         type: "Page"
                     };
@@ -11771,7 +12026,8 @@ const actor = {
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
                         metadata: {
-                            isAbstract: true
+                            isAbstract: true,
+                            isTrackingEnabled: false
                         },
                         name: "CompatUtil_actor",
                         type: "Actor"
@@ -11803,7 +12059,10 @@ module.exports = {
                         ]),
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatUtil_viewer",
                         type: "Viewer"
                     };
@@ -11902,7 +12161,8 @@ const actor = {
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
                         metadata: {
-                            isAbstract: true
+                            isAbstract: true,
+                            isTrackingEnabled: false
                         },
                         name: "CompatUtil_actor",
                         type: "Actor"
@@ -11934,7 +12194,10 @@ module.exports = {
                         ]),
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatUtil_viewer",
                         type: "Viewer"
                     };
@@ -12035,7 +12298,10 @@ module.exports = {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatUtil_viewer1",
                         type: "Viewer"
                     };
@@ -12087,7 +12353,10 @@ module.exports = {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatUtil_viewer2",
                         type: "Viewer"
                     };
@@ -12188,7 +12457,10 @@ module.exports = {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatUtil_viewer1",
                         type: "Viewer"
                     };
@@ -12240,7 +12512,10 @@ module.exports = {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatUtil_viewer2",
                         type: "Viewer"
                     };
@@ -12338,7 +12613,10 @@ module.exports = {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatUtil_viewer1",
                         type: "Viewer"
                     };
@@ -12390,7 +12668,10 @@ module.exports = {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatUtil_viewer2",
                         type: "Viewer"
                     };
@@ -12488,7 +12769,10 @@ module.exports = {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatUtil_viewer1",
                         type: "Viewer"
                     };
@@ -12540,7 +12824,10 @@ module.exports = {
                         ],
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
-                        metadata: {},
+                        metadata: {
+                            isAbstract: false,
+                            isTrackingEnabled: false
+                        },
                         name: "CompatUtil_viewer2",
                         type: "Viewer"
                     };
@@ -12904,7 +13191,8 @@ module.exports = createFragmentContainer(CompatProfile, {
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
                         metadata: {
-                            isAbstract: true
+                            isAbstract: true,
+                            isTrackingEnabled: false
                         },
                         name: "CompatProfile",
                         type: "Actor"
@@ -13118,7 +13406,8 @@ module.exports = createFragmentContainer(CompatProfile, {
                         id: RelayQL_GENERATED.__id(),
                         kind: "Fragment",
                         metadata: {
-                            isAbstract: true
+                            isAbstract: true,
+                            isTrackingEnabled: false
                         },
                         name: "CompatProfile",
                         type: "Actor"

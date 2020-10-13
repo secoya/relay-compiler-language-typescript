@@ -7,9 +7,9 @@ export function createCompatNode(
   modernNode: ts.Expression,
   classicNode: ts.Expression
 ): ts.Expression {
-  return ts.createObjectLiteral([
-    ts.createPropertyAssignment(ts.createIdentifier('modern'), modernNode),
-    ts.createPropertyAssignment(ts.createIdentifier('classic'), classicNode),
+  return ts.factory.createObjectLiteralExpression([
+    ts.factory.createPropertyAssignment(ts.factory.createIdentifier('modern'), modernNode),
+    ts.factory.createPropertyAssignment(ts.factory.createIdentifier('classic'), classicNode),
   ], true);
 }
 

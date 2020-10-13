@@ -1,7 +1,5 @@
-import { RelayTransformError } from "./RelayTransformError";
-import { GraphQLError } from "graphql";
-
 import * as util from "util";
+import { RelayTransformError } from "./RelayTransformError";
 
 /**
  * In case of an error during transform, determine if it should be logged

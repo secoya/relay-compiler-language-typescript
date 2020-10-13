@@ -1,5 +1,5 @@
-import * as ts from 'typescript';
 import { DocumentNode, parse } from 'graphql';
+import * as ts from 'typescript';
 
 export function getValidGraphQLTag(node: ts.TaggedTemplateExpression): DocumentNode | null {
 	if (!isGraphQLTag(node)) {

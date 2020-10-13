@@ -1,32 +1,29 @@
-import { RelayQLPrinter } from './RelayQLPrinter';
-
-import * as util from 'util';
-import * as path from 'path';
-import * as ts from 'typescript';
-
-import { RelayQLFragment, RelayQLMutation, RelayQLQuery, RelayQLSubscription, RelayQLNodeType } from './RelayQLAST';
 import {
-	formatError,
-	parse,
-	Source,
-	validate,
 	FieldsOnCorrectTypeRule,
+	formatError,
 	FragmentsOnCompositeTypesRule,
 	KnownArgumentNamesRule,
 	KnownTypeNamesRule,
+	parse,
 	PossibleFragmentSpreadsRule,
+	Source,
+	validate,
 	VariablesInAllowedPositionRule,
 } from 'graphql';
 import * as gql from 'graphql';
+import { DocumentNode, GraphQLError, GraphQLFormattedError, GraphQLSchema } from 'graphql';
+import * as path from 'path';
+import * as ts from 'typescript';
+import * as util from 'util';
+import { RelayQLFragment, RelayQLMutation, RelayQLNodeType, RelayQLQuery, RelayQLSubscription } from './RelayQLAST';
+import { RelayQLDefinition } from './RelayQLAST';
+import { RelayQLPrinter } from './RelayQLPrinter';
+import { Printable, Substitution } from './RelayQLPrinter';
 
 const ValuesOfCorrectTypeRule: typeof PossibleFragmentSpreadsRule = (gql as any).ValuesOfCorrectTypeRule;
 
-import { RelayQLDefinition } from './RelayQLAST';
-import { Printable, Substitution } from './RelayQLPrinter';
-import { DocumentNode, GraphQLError, GraphQLFormattedError, GraphQLSchema } from 'graphql';
-
 export type Validator<T> = () => {
-	validate: (schema: GraphQLSchema, ast: T) => Array<GraphQLError>;
+	validate: (schema: GraphQLSchema, ast: T) => GraphQLError[];
 };
 
 type TransformerOptions = {
@@ -89,7 +86,7 @@ export class RelayQLTransformer {
 		node: ts.TaggedTemplateExpression,
 		documentName: string,
 	): {
-		substitutions: Array<Substitution>;
+		substitutions: Substitution[];
 		templateText: string;
 		variableNames: { [variableName: string]: void };
 	} {
@@ -203,7 +200,7 @@ export class RelayQLTransformer {
 		}
 	}
 
-	validateDocument(document: DocumentNode, documentName: string): Array<GraphQLFormattedError> | null {
+	validateDocument(document: DocumentNode, documentName: string): GraphQLFormattedError[] | null {
 		if (document.definitions.length !== 1) {
 			throw new Error(
 				util.format(
@@ -239,8 +236,8 @@ export class RelayQLTransformer {
 	}
 }
 
-function capitalize(string: string): string {
-	return string[0].toUpperCase() + string.slice(1);
+function capitalize(str: string): string {
+	return str[0].toUpperCase() + str.slice(1);
 }
 
 /**

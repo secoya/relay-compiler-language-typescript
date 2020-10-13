@@ -1,24 +1,22 @@
-import * as ts from 'typescript';
-import * as util from 'util';
-
-import { compileRelayQLTag } from './compileRelayQLTag';
-import { getFragmentNameParts } from './getFragmentNameParts';
 import {
-	DefinitionNode,
-	FragmentDefinitionNode,
-	DirectiveNode,
 	ArgumentNode,
-	FragmentSpreadNode,
-	VariableDefinitionNode,
-	OperationDefinitionNode,
-	ValueNode,
 	BooleanValueNode,
+	DefinitionNode,
+	DirectiveNode,
+	FragmentDefinitionNode,
+	FragmentSpreadNode,
+	OperationDefinitionNode,
+	print,
+	VariableDefinitionNode,
 	VariableNode,
 	visit,
-	print,
 } from 'graphql';
+import * as ts from 'typescript';
+import * as util from 'util';
+import { compileRelayQLTag } from './compileRelayQLTag';
+import { getFragmentNameParts } from './getFragmentNameParts';
 import { NormalizedOptions } from './Options';
-import { ScopeAnalyzer, BindingKind } from './ScopeAnalyzer';
+import { BindingKind, ScopeAnalyzer } from './ScopeAnalyzer';
 
 interface Fragment {
 	name: string;
@@ -67,12 +65,19 @@ function createFragmentConcreteNode(
 	const substitutions = createSubstitutionsForFragmentSpreads(ctx, scopeAnalyzer, node, fragments);
 
 	const transformedAST = createObject({
-		kind: ts.createLiteral('FragmentDefinition'),
+		kind: createStringLiteral('FragmentDefinition'),
 		argumentDefinitions: createFragmentArguments(argumentDefinitions, variables),
 		node: createRelayQLTemplate(ctx, scopeAnalyzer, node, classicAST, options),
 	});
 
 	return createConcreteNode(transformedAST, substitutions);
+}
+
+function createStringLiteral(str: string) {
+	if (typeof str !== 'string') {
+		throw new TypeError(`str must be a string: ${str}`);
+	}
+	return ts.factory.createStringLiteral(str);
 }
 
 function createOperationConcreteNode(
@@ -93,11 +98,11 @@ function createOperationConcreteNode(
 			? createFragmentForOperation(ctx, scopeAnalyzer, node, classicAST, options)
 			: createRelayQLTemplate(ctx, scopeAnalyzer, node, classicAST, options);
 	const transformedAST = createObject({
-		kind: ts.createLiteral('OperationDefinition'),
+		kind: createStringLiteral('OperationDefinition'),
 		argumentDefinitions: createOperationArguments(definition.variableDefinitions),
-		params: ts.createObjectLiteral([]),
-		name: ts.createLiteral(definitionName.value),
-		operation: ts.createLiteral(classicAST.operation),
+		params: ts.factory.createObjectLiteralExpression([]),
+		name: createStringLiteral(definitionName.value),
+		operation: createStringLiteral(classicAST.operation),
 		node: nodeAST,
 	});
 
@@ -221,41 +226,43 @@ function createClassicAST(ctx: ts.TransformationContext, definition: DefinitionN
 const RELAY_QL_GENERATED = 'RelayQL_GENERATED';
 
 function createConcreteNode(transformedAST: ts.Expression, substitutions: ts.VariableDeclaration[]) {
-	const body: ts.Statement[] = [ts.createReturn(transformedAST)];
+	const body: ts.Statement[] = [ts.factory.createReturnStatement(transformedAST)];
 	if (substitutions.length > 0) {
 		body.unshift(
-			ts.createVariableStatement(undefined, ts.createVariableDeclarationList(substitutions, ts.NodeFlags.Const)),
+			ts.factory.createVariableStatement(undefined, ts.factory.createVariableDeclarationList(substitutions, ts.NodeFlags.Const)),
 		);
 	}
-	return ts.createFunctionExpression(
+	return ts.factory.createFunctionExpression(
 		undefined,
 		undefined,
 		undefined,
 		undefined,
 		[
-			ts.createParameter(
+			ts.factory.createParameterDeclaration(
 				undefined,
 				undefined,
 				undefined,
-				ts.createIdentifier(RELAY_QL_GENERATED),
+				ts.factory.createIdentifier(RELAY_QL_GENERATED),
 				undefined,
 				undefined,
 				undefined,
 			),
 		],
 		undefined,
-		ts.createBlock(body, /* multiLine */ true),
+		ts.factory.createBlock(body, /* multiLine */ true),
 	);
 }
 
 function createOperationArguments(variableDefinitions: ReadonlyArray<VariableDefinitionNode> | undefined) {
 	if (!variableDefinitions) {
-		return ts.createArrayLiteral([], false);
+		return ts.factory.createArrayLiteralExpression([], false);
 	}
-	return ts.createArrayLiteral(
+	return ts.factory.createArrayLiteralExpression(
 		variableDefinitions.map(definition => {
 			const name = definition.variable.name.value;
-			const defaultValue = definition.defaultValue ? parseValue(definition.defaultValue) : ts.createNull();
+			const defaultValue = definition.defaultValue
+				? parseValue(definition.defaultValue)
+				: ts.factory.createNull();
 			return createLocalArgument(name, defaultValue);
 		}, true),
 	);
@@ -269,28 +276,28 @@ function createFragmentArguments(argumentDefinitions: ArgumentNode[] | null, var
 			const defaultValueField = (definition.value as any).fields.find(
 				(field: any) => field.name.value === 'defaultValue',
 			);
-			const defaultValue = defaultValueField ? parseValue(defaultValueField.value) : ts.createNull();
+			const defaultValue = defaultValueField ? parseValue(defaultValueField.value) : ts.factory.createNull();
 			concreteDefinitions.push(createLocalArgument(name, defaultValue));
 		} else {
 			concreteDefinitions.push(createRootArgument(name));
 		}
 	});
-	return ts.createArrayLiteral(concreteDefinitions, true);
+	return ts.factory.createArrayLiteralExpression(concreteDefinitions, true);
 }
 
 function createLocalArgument(variableName: string, defaultValue: ts.Expression) {
 	return createObject({
-		defaultValue: defaultValue,
-		kind: ts.createLiteral('LocalArgument'),
-		name: ts.createLiteral(variableName),
+		defaultValue,
+		kind: createStringLiteral('LocalArgument'),
+		name: createStringLiteral(variableName),
 	});
 }
 
 function createRootArgument(variableName: string) {
-	return ts.createObjectLiteral(
+	return ts.factory.createObjectLiteralExpression(
 		[
-			ts.createPropertyAssignment(ts.createIdentifier('kind'), ts.createLiteral('RootArgument')),
-			ts.createPropertyAssignment(ts.createIdentifier('name'), ts.createLiteral(variableName)),
+			ts.factory.createPropertyAssignment(ts.factory.createIdentifier('kind'), createStringLiteral('RootArgument')),
+			ts.factory.createPropertyAssignment(ts.factory.createIdentifier('name'), createStringLiteral(variableName)),
 		],
 		true,
 	);
@@ -299,17 +306,20 @@ function createRootArgument(variableName: string) {
 function parseValue(value: any) {
 	switch (value.kind) {
 		case 'BooleanValue':
-			return ts.createLiteral(value.value);
+			if (typeof value.value !== 'boolean') {
+				throw new TypeError(`Invalid boolean value: ${typeof value.value}`);
+			}
+			return value.value ? ts.factory.createTrue() : ts.factory.createFalse();
 		case 'IntValue':
-			return ts.createLiteral(parseInt(value.value, 10));
+			return ts.factory.createNumericLiteral(parseInt(value.value, 10));
 		case 'FloatValue':
-			return ts.createLiteral(parseFloat(value.value));
+			return ts.factory.createNumericLiteral(parseFloat(value.value));
 		case 'StringValue':
-			return ts.createLiteral(value.value);
+			return createStringLiteral(value.value);
 		case 'EnumValue':
-			return ts.createLiteral(value.value);
+			return createStringLiteral(value.value);
 		case 'ListValue':
-			return ts.createArrayLiteral(value.values.map((item: any) => parseValue(item)), /* multiLine */ true);
+			return ts.factory.createArrayLiteralExpression(value.values.map((item: any) => parseValue(item)), /* multiLine */ true);
 		default:
 			throw new Error('TSTransformRelay: Unsupported literal type `' + value.kind + '`.');
 	}
@@ -323,8 +333,8 @@ function convertArgument(argNode: ArgumentNode): { name: string; ast: ts.Express
 		case 'Variable':
 			const paramName = value.name.value;
 			ast = createObject({
-				kind: ts.createLiteral('CallVariable'),
-				callVariableName: ts.createLiteral(paramName),
+				kind: createStringLiteral('CallVariable'),
+				callVariableName: createStringLiteral(paramName),
 			});
 			break;
 		default:
@@ -334,10 +344,10 @@ function convertArgument(argNode: ArgumentNode): { name: string; ast: ts.Express
 }
 
 function createObject(obj: { [key: string]: ts.Expression | null }) {
-	return ts.createObjectLiteral(
+	return ts.factory.createObjectLiteralExpression(
 		Object.keys(obj).map(key => {
 			const value = obj[key];
-			return ts.createPropertyAssignment(ts.createIdentifier(key), value == null ? ts.createNull() : value);
+			return ts.factory.createPropertyAssignment(ts.factory.createIdentifier(key), value == null ? ts.factory.createNull() : value);
 		}),
 		/* multiLine */ true,
 	);
@@ -409,9 +419,13 @@ function createRelayQLTemplate(
 ) {
 	const [documentName, propName] = getFragmentNameParts(ast.name.value);
 	const text = print(ast);
-	const taggedTemplateLiteral = ts.createTaggedTemplate(
-		ts.createPropertyAccess(ts.createIdentifier('Relay'), ts.createIdentifier('QL')),
-		ts.createNoSubstitutionTemplateLiteral(text),
+	const taggedTemplateLiteral = ts.factory.createTaggedTemplateExpression(
+		ts.factory.createPropertyAccessExpression(
+			ts.factory.createIdentifier('Relay'),
+			ts.factory.createIdentifier('QL')
+		),
+		undefined,
+		ts.factory.createNoSubstitutionTemplateLiteral(text),
 	);
 
 	// Disable classic validation rules inside of `graphql` tags which are
@@ -448,34 +462,42 @@ function createSubstitutionsForFragmentSpreads(
         fragment '${fragment.name}' is defined and bound to local variable '${propName}'. `);
 			}
 			const fragmentProp = scopeAnalyzer.getBindingAtNode(node, propName)
-				? ts.createPropertyAccess(ts.createIdentifier(propName), ts.createIdentifier(propName))
-				: ts.createLogicalOr(
-						ts.createPropertyAccess(
-							ts.createPropertyAccess(ts.createIdentifier(module), ts.createIdentifier(propName)),
-							ts.createIdentifier(propName),
+				? ts.factory.createPropertyAccessExpression(
+					ts.factory.createIdentifier(propName),
+					ts.factory.createIdentifier(propName)
+				)
+				: ts.factory.createLogicalOr(
+						ts.factory.createPropertyAccessExpression(
+							ts.factory.createPropertyAccessExpression(
+								ts.factory.createIdentifier(module),
+								ts.factory.createIdentifier(propName)
+							),
+							ts.factory.createIdentifier(propName),
 						),
-						ts.createPropertyAccess(ts.createIdentifier(module), ts.createIdentifier(propName)),
+						ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(module), ts.factory.createIdentifier(propName)),
 				  );
 
-			return ts.createVariableDeclaration(
-				ts.createIdentifier(varName),
+			return ts.factory.createVariableDeclaration(
+				ts.factory.createIdentifier(varName),
 				undefined,
-				ts.createPropertyAccess(
-					ts.createCall(
-						ts.createPropertyAccess(
-							ts.createIdentifier(RELAY_QL_GENERATED),
-							ts.createIdentifier('__getClassicFragment'),
+				undefined,
+				ts.factory.createPropertyAccessExpression(
+					ts.factory.createCallExpression(
+						ts.factory.createPropertyAccessExpression(
+							ts.factory.createIdentifier(RELAY_QL_GENERATED),
+							ts.factory.createIdentifier('__getClassicFragment'),
 						),
 						undefined,
-						[fragmentProp, ts.createLiteral(true)],
+						[fragmentProp, ts.factory.createTrue()],
 					),
 					// Hack to extract 'ConcreteFragment' from 'ConcreteFragmentDefinition'
-					ts.createIdentifier('node'),
+					ts.factory.createIdentifier('node'),
 				),
 			);
 		} else {
-			return ts.createVariableDeclaration(
-				ts.createIdentifier(varName),
+			return ts.factory.createVariableDeclaration(
+				ts.factory.createIdentifier(varName),
+				undefined,
 				undefined,
 				createGetFragmentCall(ctx, scopeAnalyzer, module, propName, node, fragment.args),
 			);
@@ -493,7 +515,7 @@ function createGetFragmentCall(
 ): ts.Expression {
 	const args = [];
 	if (propName) {
-		args.push(ts.createLiteral(propName));
+		args.push(createStringLiteral(propName));
 	}
 
 	if (fragmentArguments) {
@@ -505,14 +527,14 @@ function createGetFragmentCall(
 	// To be safe, when defined locally, always check the __container__ property
 	// first.
 	const container = isDefinedLocally(scopeAnalyzer, node, module)
-		? ts.createLogicalOr(
+		? ts.factory.createLogicalOr(
 				// __container__ is defined via ReactRelayCompatContainerBuilder.
-				ts.createPropertyAccess(ts.createIdentifier(module), ts.createIdentifier('__container__')),
-				ts.createIdentifier(module),
+				ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(module), ts.factory.createIdentifier('__container__')),
+				ts.factory.createIdentifier(module),
 		  )
-		: ts.createIdentifier(module);
+		: ts.factory.createIdentifier(module);
 
-	return ts.createCall(ts.createPropertyAccess(container, ts.createIdentifier('getFragment')), undefined, args);
+	return ts.factory.createCallExpression(ts.factory.createPropertyAccessExpression(container, ts.factory.createIdentifier('getFragment')), undefined, args);
 }
 
 function isDefinedLocally(scopeAnalyzer: ScopeAnalyzer, node: ts.Node, name: string): boolean {
