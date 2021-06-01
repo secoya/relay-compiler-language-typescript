@@ -6489,8 +6489,8 @@ function SomeTopLevelView() {
     let _graphql = 'unrelated';
     return (<View>
       <QueryRenderer environment={RelayStore} query={__graphql$0 || (__graphql$0 = function () {
-        return require("./__generated__/ExampleQuery.graphql.ts").default;
-    })} variables={{ id: '12345' }}/>
+            return require("./__generated__/ExampleQuery.graphql.ts").default;
+        })} variables={{ id: '12345' }}/>
     </View>);
 }
 
@@ -6541,78 +6541,78 @@ function SomeTopLevelView() {
     let _graphql = 'unrelated';
     return (<View>
       <QueryRenderer environment={RelayStore} query={__graphql$0 || (__graphql$0 = {
-        modern: function () {
-            return require("./__generated__/ExampleQuery.graphql.ts").default;
-        },
-        classic: function (RelayQL_GENERATED) {
-            const ProfilePic_user = ProfilePic.getFragment("user");
-            return {
-                kind: "OperationDefinition",
-                argumentDefinitions: [{
-                        defaultValue: null,
-                        kind: "LocalArgument",
-                        name: "id"
-                    }],
-                params: {},
-                name: "ExampleQuery",
-                operation: "query",
-                node: function () {
-                    return {
-                        children: [
-                            {
-                                calls: [
-                                    {
-                                        kind: "Call",
-                                        metadata: {},
-                                        name: "id",
-                                        value: {
-                                            kind: "CallVariable",
-                                            callVariableName: "id"
+            modern: function () {
+                return require("./__generated__/ExampleQuery.graphql.ts").default;
+            },
+            classic: function (RelayQL_GENERATED) {
+                const ProfilePic_user = ProfilePic.getFragment("user");
+                return {
+                    kind: "OperationDefinition",
+                    argumentDefinitions: [{
+                            defaultValue: null,
+                            kind: "LocalArgument",
+                            name: "id"
+                        }],
+                    params: {},
+                    name: "ExampleQuery",
+                    operation: "query",
+                    node: function () {
+                        return {
+                            children: [
+                                {
+                                    calls: [
+                                        {
+                                            kind: "Call",
+                                            metadata: {},
+                                            name: "id",
+                                            value: {
+                                                kind: "CallVariable",
+                                                callVariableName: "id"
+                                            }
                                         }
-                                    }
-                                ],
-                                children: [].concat.apply([], [
-                                    {
-                                        fieldName: "id",
-                                        kind: "Field",
-                                        metadata: {
-                                            isGenerated: true,
-                                            isRequisite: true
+                                    ],
+                                    children: [].concat.apply([], [
+                                        {
+                                            fieldName: "id",
+                                            kind: "Field",
+                                            metadata: {
+                                                isGenerated: true,
+                                                isRequisite: true
+                                            },
+                                            type: "ID"
                                         },
-                                        type: "ID"
-                                    },
-                                    {
-                                        fieldName: "__typename",
-                                        kind: "Field",
-                                        metadata: {
-                                            isGenerated: true,
-                                            isRequisite: true
+                                        {
+                                            fieldName: "__typename",
+                                            kind: "Field",
+                                            metadata: {
+                                                isGenerated: true,
+                                                isRequisite: true
+                                            },
+                                            type: "String"
                                         },
-                                        type: "String"
+                                        RelayQL_GENERATED.__frag(ProfilePic_user)
+                                    ]),
+                                    fieldName: "node",
+                                    kind: "Field",
+                                    metadata: {
+                                        canHaveSubselections: true,
+                                        inferredRootCallName: "node",
+                                        inferredPrimaryKey: "id",
+                                        isAbstract: true
                                     },
-                                    RelayQL_GENERATED.__frag(ProfilePic_user)
-                                ]),
-                                fieldName: "node",
-                                kind: "Field",
-                                metadata: {
-                                    canHaveSubselections: true,
-                                    inferredRootCallName: "node",
-                                    inferredPrimaryKey: "id",
-                                    isAbstract: true
-                                },
-                                type: "Node"
-                            }
-                        ],
-                        id: RelayQL_GENERATED.__id(),
-                        kind: "Fragment",
-                        metadata: {},
-                        name: "ExampleQuery",
-                        type: "Query"
-                    };
-                }()
-            };
-        }
-    })} variables={{ id: '12345' }}/>
+                                    type: "Node"
+                                }
+                            ],
+                            id: RelayQL_GENERATED.__id(),
+                            kind: "Fragment",
+                            metadata: {},
+                            name: "ExampleQuery",
+                            type: "Query"
+                        };
+                    }()
+                };
+            }
+        })} variables={{ id: '12345' }}/>
     </View>);
 }
 
@@ -6663,78 +6663,78 @@ function SomeTopLevelView() {
     let _graphql = 'unrelated';
     return (<View>
       <QueryRenderer environment={RelayStore} query={__graphql$0 || (__graphql$0 = {
-        modern: function () {
-            return require("./__generated__/ExampleQuery.graphql.ts").default;
-        },
-        classic: function (RelayQL_GENERATED) {
-            const ProfilePic_user = ProfilePic.getFragment("user");
-            return {
-                kind: "OperationDefinition",
-                argumentDefinitions: [{
-                        defaultValue: null,
-                        kind: "LocalArgument",
-                        name: "id"
-                    }],
-                params: {},
-                name: "ExampleQuery",
-                operation: "query",
-                node: function () {
-                    return {
-                        children: [
-                            {
-                                calls: [
-                                    {
-                                        kind: "Call",
-                                        metadata: {},
-                                        name: "id",
-                                        value: {
-                                            kind: "CallVariable",
-                                            callVariableName: "id"
+            modern: function () {
+                return require("./__generated__/ExampleQuery.graphql.ts").default;
+            },
+            classic: function (RelayQL_GENERATED) {
+                const ProfilePic_user = ProfilePic.getFragment("user");
+                return {
+                    kind: "OperationDefinition",
+                    argumentDefinitions: [{
+                            defaultValue: null,
+                            kind: "LocalArgument",
+                            name: "id"
+                        }],
+                    params: {},
+                    name: "ExampleQuery",
+                    operation: "query",
+                    node: function () {
+                        return {
+                            children: [
+                                {
+                                    calls: [
+                                        {
+                                            kind: "Call",
+                                            metadata: {},
+                                            name: "id",
+                                            value: {
+                                                kind: "CallVariable",
+                                                callVariableName: "id"
+                                            }
                                         }
-                                    }
-                                ],
-                                children: [].concat.apply([], [
-                                    {
-                                        fieldName: "id",
-                                        kind: "Field",
-                                        metadata: {
-                                            isGenerated: true,
-                                            isRequisite: true
+                                    ],
+                                    children: [].concat.apply([], [
+                                        {
+                                            fieldName: "id",
+                                            kind: "Field",
+                                            metadata: {
+                                                isGenerated: true,
+                                                isRequisite: true
+                                            },
+                                            type: "ID"
                                         },
-                                        type: "ID"
-                                    },
-                                    {
-                                        fieldName: "__typename",
-                                        kind: "Field",
-                                        metadata: {
-                                            isGenerated: true,
-                                            isRequisite: true
+                                        {
+                                            fieldName: "__typename",
+                                            kind: "Field",
+                                            metadata: {
+                                                isGenerated: true,
+                                                isRequisite: true
+                                            },
+                                            type: "String"
                                         },
-                                        type: "String"
+                                        RelayQL_GENERATED.__frag(ProfilePic_user)
+                                    ]),
+                                    fieldName: "node",
+                                    kind: "Field",
+                                    metadata: {
+                                        canHaveSubselections: true,
+                                        inferredRootCallName: "node",
+                                        inferredPrimaryKey: "id",
+                                        isAbstract: true
                                     },
-                                    RelayQL_GENERATED.__frag(ProfilePic_user)
-                                ]),
-                                fieldName: "node",
-                                kind: "Field",
-                                metadata: {
-                                    canHaveSubselections: true,
-                                    inferredRootCallName: "node",
-                                    inferredPrimaryKey: "id",
-                                    isAbstract: true
-                                },
-                                type: "Node"
-                            }
-                        ],
-                        id: RelayQL_GENERATED.__id(),
-                        kind: "Fragment",
-                        metadata: {},
-                        name: "ExampleQuery",
-                        type: "Query"
-                    };
-                }()
-            };
-        }
-    })} variables={{ id: '12345' }}/>
+                                    type: "Node"
+                                }
+                            ],
+                            id: RelayQL_GENERATED.__id(),
+                            kind: "Fragment",
+                            metadata: {},
+                            name: "ExampleQuery",
+                            type: "Query"
+                        };
+                    }()
+                };
+            }
+        })} variables={{ id: '12345' }}/>
     </View>);
 }
 

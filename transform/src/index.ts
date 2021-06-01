@@ -6,9 +6,10 @@ import { getValidRelayQLTag } from "./getValidRelayQLTag";
 import { compileRelayQLTag } from "./compileRelayQLTag";
 import { ScopeAnalyzer } from "./ScopeAnalyzer";
 
-// https://github.com/Microsoft/TypeScript/blob/cc6d18e4db924d05e55c2a22587ad47ba53e7989/src/compiler/types.ts#L4490
+// this is prone to changing when newer versions are added.
+// https://github.com/microsoft/TypeScript/blob/663b19fe4a7c4d4ddaa61aedadd28da06acd27b6/src/compiler/types.ts#L4490
 const enum TransformFlags {
-  ContainsES2015 = 1 << 8
+  ContainsES2015 = 1 << 9
 }
 
 interface ExtraNode {
