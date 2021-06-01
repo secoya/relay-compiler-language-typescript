@@ -3,3 +3,4 @@
 test/
 src/
 tsconfig.json
+.npmrc
